@@ -135,7 +135,7 @@ class ContactList:
     def print_public_table(self, sites):
         table_data = []
         for acronym in sites.ordered_acronyms():
-            found_primary_contact_for_site = False
+            num_primary_contacts_for_site = 0
             if acronym in self.excluded_public_groups:
                 print(acronym + " excluded from public table", file=sys.stderr)
                 continue
@@ -145,12 +145,14 @@ class ContactList:
                 continue
             for contact in self.contacts[acronym]:
                 if contact.primary_contact:
-                    found_primary_contact_for_site = True
+                    num_primary_contacts_for_site += 1
                     table_data.append([acronym, site.description, contact.name, contact.email, site.ocac_acronym])
 
             # maybe put out a warning for an OTTA site if there is no primary contact?
-            if not found_primary_contact_for_site:
+            if not num_primary_contacts_for_site:
                 print("Couldn't find a primary contact for " + acronym, file=sys.stderr)
+            if num_primary_contacts_for_site > 1:
+                print("Published multiple primary contacts for " + acronym, file=sys.stderr)
 
         table_html = tabulate(table_data, headers=["OTTA Site", "Study Name", "Contact", "Email", "OCAC"], tablefmt="html")
         print(self._add_class(table_html))
@@ -171,7 +173,7 @@ class ContactList:
 if len(sys.argv) < 3:
     print("Usage: %s otta_ocac.xls contacts.xls" % sys.argv[0], file=sys.stderr)
     sys.exit(1)
-    
+
 otta_description_ocac_filename = sys.argv[1]
 sites = SiteGroup(otta_description_ocac_filename)
 
