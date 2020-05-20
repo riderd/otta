@@ -168,6 +168,10 @@ class ContactList:
         print(self._add_class(table_html))
 
 
+if len(sys.argv) < 3:
+    print("Usage: %s otta_ocac.xls contacts.xls" % sys.argv[0], file=sys.stderr)
+    sys.exit(1)
+    
 otta_description_ocac_filename = sys.argv[1]
 sites = SiteGroup(otta_description_ocac_filename)
 
