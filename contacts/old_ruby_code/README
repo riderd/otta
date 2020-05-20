@@ -1,0 +1,34 @@
+Note you need builder::XMLMarkup for this to work. This can be installed with % gems install builder. See https://www.xml.com/pub/a/2006/01/04/creating-xml-with-ruby-and-builder.html for article discussing it.
+
+# Create public otta groups table
+Save latest contacts spreadsheet as a tab-delimited file and save OTTA_StudyName_OCAC.xls as a tab-delimited file and make them UNIX files
+R5068420 ~/D/O/Members> pwd
+/Users/m026366/Dropbox/OTTA_Website/Members
+R5068420 ~/D/O/Members> flip -u contacts_20190829.txt OTTA_StudyName_OCAC.txt 
+
+[I] R5068420 ~/D/O/Members> ../otta_scripts/otta_contacts_to_public_otta_groups.rb OTTA_StudyName_OCAC.txt contacts_20190829.txt | sort | ../otta_scripts/create_html_table_from_text.rb "OTTA Site,Study Name,Contact,Email,OCAC Site" otta-table | grep -v to_s > public_groups_table_data
+Don't have ocac acronym for otta study BAR
+...
+Don't have ocac acronym for otta study WAGO
+
+Note that sometimes you'll get an error like this:
+
+../otta_scripts/otta_contacts_to_public_otta_groups.rb:14:in `split': invalid byte sequence in UTF-8 (ArgumentError)
+
+This means you have some unusual characters in the text file. If you view/open the OTTA_StudyName_OCAC.txt or contacts_20190829.txt file in less/vi, you can usually see them and remove/change.
+
+
+# Copy the output from public_groups_table_data into the website
+
+# Create members/contacts table
+1. Open OTTA_Website/OTTA_Contacts...xlsx and save as tab-delimited file (call it contacts.txt)
+2. Make it a UNIX file 
+	% flip u contacts.txt
+3. Edit contacts.txt and change funny characters to the English counterparts (Jos<92e> -> Jose). We should fix this
+4. Process the data from the scripts dir and copy the output into the HTML table on the website
+	% cd otta_scripts
+	% grep -v "OTTA Study Acronym" ../contacts.txt | ./create_html_table_from_text.rb "OTTA Study Acronym,Primary Contact,Name,Email" otta-table | grep -v to_s
+	
+5. Update the data on the members/contacts page to match the spreadsheet date.
+
+6. Delete ../contacts.txt
