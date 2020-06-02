@@ -108,7 +108,7 @@ class ContactList:
             contact_list_for_acronym.append(contact)
             self.contacts[acronym] = contact_list_for_acronym
 
-        self.excluded_public_groups = ["ARL", "COE"]
+        self.excluded_public_groups = ["ARL", "COR"]
 
     def missing_sites(self, sites):
         for acronym in self.contacts:
