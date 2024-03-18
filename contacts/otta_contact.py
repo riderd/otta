@@ -1,5 +1,4 @@
 import sys
-from site import SiteGroup
 from tabulate import tabulate
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
