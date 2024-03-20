@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
-from site import SiteGroup
-from contact import ContactList
+from otta_site import SiteGroup
+from otta_contact import ContactList
 
 if len(sys.argv) < 4:
     print("Usage: %s otta_ocac.xls contacts.xls public_excluded_sites.txt" % sys.argv[0], file=sys.stderr)
