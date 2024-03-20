@@ -44,6 +44,9 @@ class ContactList:
         for i in range(1, max_row + 1):
             acronym = clean(sheet.cell(row=i, column=1).value)
 
+            if (acronym == "OTTA Site"):
+                continue
+
             primary_contact = False;
             yes_no = sheet.cell(row=i, column=2).value
             if (yes_no.lower() == "yes"):
