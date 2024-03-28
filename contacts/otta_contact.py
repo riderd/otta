@@ -43,6 +43,9 @@ class ContactList:
         self.contacts = {}
         for i in range(1, max_row + 1):
             acronym = clean(sheet.cell(row=i, column=1).value)
+            # This indicates an empty row, probably at the end of the spreadsheet
+            if not acronym:
+                continue
 
             if (acronym == "OTTA Site"):
                 continue
@@ -91,7 +94,7 @@ class ContactList:
                 names = []
                 for contact in self.contacts[acronym]:
                     names.append(contact.name)
-                print("%s: %s" % (acronym, names), file=sys.stderr)
+                print("OTTA Group Acronym '%s': contacts: %s" % (acronym, names), file=sys.stderr)
                 print()
 
     def _add_class(self, table_html:str):

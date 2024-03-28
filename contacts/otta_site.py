@@ -26,13 +26,16 @@ class SiteGroup:
         max_row = sheet.max_row
         for i in range(1, max_row + 1):
             acronym = sheet.cell(row=i, column=1).value
+            # This indicates an empty row, probably at the end of the spreadsheet
+            if not acronym:
+                continue
             # skip header
             if (acronym == "OTTA Site"):
                 continue
             if (self.has_acronym(acronym)):
                 print("Duplicate OTTA site " + acronym)
                 sys.exit(1)
-            description = sheet.cell(row=1, column=2).value
+            description = sheet.cell(row=i, column=2).value
             ocac_acronym = sheet.cell(row=i, column=3).value
             if (ocac_acronym and ocac_acronym.strip() == ""):
                 ocac_acronym = None
