@@ -136,3 +136,14 @@ class ContactList:
 
         table_html = tabulate(table_data, headers=["OTTA Study Acronym", "Primary Contact", "Name", "Email"], tablefmt="html")
         print(self._add_class(table_html))
+
+    def print_member_email_list(self, sites, separator = ", "):
+        emails = []
+        for acronym in sites.ordered_acronyms():
+            if not acronym in self.contacts:
+                print("No contacts listed for OTTA site: " + acronym)
+                continue
+            for contact in self.contacts[acronym]:
+                emails.append(contact.email)
+
+        print(separator.join(emails))
