@@ -144,6 +144,7 @@ class ContactList:
                 print("No contacts listed for OTTA site: " + acronym)
                 continue
             for contact in self.contacts[acronym]:
-                emails.append(contact.email)
+                if contact.email:
+                    emails.append(contact.email)
 
         print(separator.join(emails))
